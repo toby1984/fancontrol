@@ -1,0 +1,39 @@
+{
+  "thermal_zones" : [ {
+    "name" : "CPU",
+    "sensors" : [ {
+      "chip" : "k10temp",
+      "feature" : "temp1",
+      "type" : "mainboard",
+      "subfeature" : "temp1_input"
+    } ],
+    "fan_speed_mapping" : {
+      "11" : 0,
+      "30" : 40,
+      "38" : 43,
+      "44" : 47,
+      "49" : 56,
+      "53" : 72,
+      "55" : 100
+    }
+  }, {
+    "name" : "disks",
+    "sensors" : [ {
+      "device" : "/dev/sda",
+      "type" : "hdd"
+    } ],
+    "fan_speed_mapping" : {
+      "26" : 39,
+      "34" : 45,
+      "37" : 53,
+      "41" : 69,
+      "44" : 100
+    }
+  } ],
+  "serial_device" : "/dev/ttyACM1",
+  "baud_rate" : 38400,
+  "min_fan_speed" : 40,
+  "max_fan_speed" : 100,
+  "smoothing_alpha" : 0.1,
+  "loop_delay_millis" : 500
+}
