@@ -48,7 +48,7 @@ Software installation:
 
    Just change to the 'fancontrol-daemon' folder and run
 
-   make
+    make
 
    Copy the resulting binary to wherever suits you.
 
@@ -58,7 +58,7 @@ Software installation:
    the fancontrol.service file to /etc/systemd/system, edit it so that the binary path as well as the path
    to your JSON configuration file are correct and then execute the following commands
 
-   systemctl daemon-reload
-   systemctl start fancontrol.service
-   # and if all goes well..
-   systemctl enable fancontrol.service
+    systemctl daemon-reload
+    systemctl start fancontrol.service
+    # and if all goes well..
+    systemctl enable fancontrol.service
