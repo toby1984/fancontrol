@@ -12,7 +12,7 @@ Features
 - rather fail-safe design
   - Arduino starts up with 100% fan speed
   - Arduino hardware watchdog will reset the Arduino if the main loop (that listens for incoming commands on the serial line) is blocked for more than 2 seconds
-  - another watchdog timer will reset the fan speed to 100% if the PC does not send a "set fan speed" command every 2 seconds
+  - another watchdog timer will reset the fan speed to 100% if the PC does not send a "set fan speed" command at least every 2 seconds
   - service on the PC-side monitored by systemd, periodically calls sd_notify() from inside the main loop to tell systemd that the service is still alive (otherwise systemd watchdog timeout will restart the service as well)
  - min/max fan speed customizable via JSON config file
  - fan speed changes can be smoothed using configurable exponential moving average (JSON config file)
