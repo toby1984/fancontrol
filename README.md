@@ -4,8 +4,8 @@ I bought a HPE Microserver only to realize afterwards that the stock fan is WAY 
 
 To fix the fan noise (and also have some fun along the way), I've come up with the following solution:
 
-1.) An Arduino-based fan controller (I had some spare Arduino Nanos lying around) that outputs a regular PWM signal so the usual PC fans work
-2.) A daemon process running on the microserver that continously monitores system temperatures and sends the desired fan speed to the Arduino via a USB serial line
+1. An Arduino-based fan controller (I had some spare Arduino Nanos lying around) that outputs a regular PWM signal so the usual PC fans work
+2. A daemon process running on the microserver that continously monitores system temperatures and sends the desired fan speed to the Arduino via a USB serial line
 
 Requirements:
 
