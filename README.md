@@ -5,7 +5,22 @@ I bought a HPE Microserver only to realize afterwards that the stock fan is WAY 
 To fix the fan noise (and also have some fun along the way), I've come up with the following solution:
 
 1. An Arduino-based fan controller (I had some spare Arduino Nanos lying around) that outputs a regular PWM signal so the usual PC fans work
-2. A daemon process running on the microserver that continously monitores system temperatures and sends the desired fan speed to the Arduino via a USB serial line
+2. A daemon process running on the microserver that continously monitores system temperatures (both HDD and mainboard sensors) and sends the desired fan speed to the Arduino via a USB serial line
+
+Features
+
+- rather fail-safe design
+  - Arduino starts up with 100% fan speed
+  - Arduino hardware watchdog will reset the Arduino if the main loop (that listens for incoming commands on the serial line) is blocked for more than 2 seconds
+  - another watchdog timer will reset the fan speed to 100% if the PC does not send a "set fan speed" command every 2 seconds
+  - service on the PC-side monitored by systemd, periodically calls sd_notify() from inside the main loop to tell systemd that the service is still alive (otherwise systemd watchdog timeout will restart the service as well)
+ - min/max fan speed customizable via JSON config file
+ - fan speed changes can be smoothed using configurable exponential moving average (JSON config file)
+- can read both mainboard and HDD temperature sensors
+- configurable mapping from temperatures to fan speed (linear interpolation, as many control points as you want)
+- sensors can be grouped into thermal zones, each with their own fan speed mapping
+- final fan speed is determined by picking the highest fan speed of all thermal zones (we only control a single fan, after all)
+
 
 Requirements:
 
