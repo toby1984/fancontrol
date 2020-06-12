@@ -32,7 +32,7 @@
   } ],
   "serial_device" : "/dev/ttyACM1",
   "baud_rate" : 38400,
-  "min_fan_speed" : 40,
+  "min_fan_speed" : 48,
   "max_fan_speed" : 100,
   "smoothing_alpha" : 0.1,
   "loop_delay_millis" : 500
