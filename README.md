@@ -46,7 +46,7 @@ You need to select the right programmer type , serial device and speed of course
 
 ## Hardware setup
 
-I've created a little perfboard on which I soldered two 4-pin fan connectors (I spent ages looking for those and finally settled on getting the original Molex ones that cost a fortune) plus 2x four pins to create a sort of patch-bay, mostly because I wasn't sure whether I might also need to feed a fake sense signal back to the mainboard or not...and I needed some place to put the piezo buzzer anyway.
+I've created a little perfboard on which I soldered two 4-pin fan connectors (I spent ages looking for those and finally settled on getting the original Molex ones that cost a fortune) plus 2x four pins to create a sort of patch-bay, mostly because I wasn't sure whether I might also need to feed a fake sense signal back to the mainboard or not...and I needed some place where to put the piezo buzzer anyway.
 
 ![Perf Board](https://raw.githubusercontent.com/toby1984/fancontrol/master/pictures/board.jpg)
 
@@ -58,7 +58,7 @@ I've created a little perfboard on which I soldered two 4-pin fan connectors (I 
 - piezo buzzer from spare parts bin
 - 100 ohm resistor for the buzzer
 
-
+![Molex connectors](https://raw.githubusercontent.com/toby1984/fancontrol/master/pictures/fan_connectors.png)
 
 ## Fan controller service (fancontrol-daemon folder):
 
