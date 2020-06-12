@@ -63,7 +63,7 @@ I've created a little perfboard on which I soldered two 4-pin fan connectors (I 
 
 ### Wiring
 
-Here's a crude schematic how I wired the fan ; pay attention to the orientation of the fan headers on my perf board (see photo above).
+Here's a crude schematic how I wired the fan ; pay attention to the orientation of the fan headers on my perf board (see photo above). Note that I accidently soldered one fan connector the wrong way and was too lazy to fix this, that's why I had to cross-connect the GND wire (black). 
 
 
 ![Wiring](https://raw.githubusercontent.com/toby1984/fancontrol/master/pictures/connections.png)
