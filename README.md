@@ -5,17 +5,21 @@ I bought a HPE Microserver only to realize afterwards that the stock fan is WAY 
 To fix the fan noise (and also have some fun along the way), I've come up with the following solution:
 
 1. An Arduino-based fan controller (I had some spare Arduino Nanos lying around) that outputs a regular PWM signal so the usual PC fans work
-2. A daemon process running on the microserver that continously monitores system temperatures (both HDD and mainboard sensors) and sends the desired fan speed to the Arduino via a USB serial line
+2. A daemon process running on the microserver that continously monitors system temperatures (both HDD and mainboard sensors) and sends the desired fan speed to the Arduino via a USB serial line
 
 Features
 
 - rather fail-safe design
-  - Arduino starts up with 100% fan speed
-  - Arduino hardware watchdog will reset the Arduino if the main loop (that listens for incoming commands on the serial line) is blocked for more than 2 seconds
+  - Arduino always starts up with 100% fan speed
+  - Arduino hardware watchdog will reset the Arduino if the main loop (that listens for incoming commands on the serial line) is blocked for more than 3 seconds
   - another watchdog timer will reset the fan speed to 100% if the PC does not send a "set fan speed" command at least every 2 seconds
   - service on the PC-side monitored by systemd, periodically calls sd_notify() from inside the main loop to tell systemd that the service is still alive (otherwise systemd watchdog timeout will restart the service as well)
- - min/max fan speed customizable via JSON config file
- - fan speed changes can be smoothed using configurable exponential moving average (JSON config file)
+- buzzer that will sound 
+  - one beep after the arduino has powered up
+  - two beeps when the arduino got reset because the PC failed send a 'set fan speed' command within 3 seconds
+  - three beeps if the watchdog timer kicked in because the arduino entered an infinite loop
+- min/max fan speed customizable via JSON config file
+- fan speed changes can be smoothed using configurable exponential moving average (JSON config file)
 - can read both mainboard and HDD temperature sensors
 - configurable mapping from temperatures to fan speed (linear interpolation, as many control points as you want)
 - sensors can be grouped into thermal zones, each with their own fan speed mapping
@@ -27,7 +31,7 @@ Requirements:
 - regular 120mm fan with PWM speed control (4-pin connector)
 - Arduino-compatible AVR Atmega328p board (I'm using the watchdog timer, 2 PWM outputs (buzzer+fan), one 16-bit timer and 2 8-bit timers) ... you can probably get away with a smaller AVR but I didn't test this)
 - ISP programmer for your Arduino board (you can probably also upload the binary some other way, I just never bothered)
-- Soldering iron & a steady hand (I just cut off the cable from the stock Delta fan and used it to connect the replacement fan)
+- Soldering iron & a steady hand (I just cut off the cable from the stock Delta fan and used it to connect to a tiny perfboard)
 
 ## Arduino (fancontrol-avr folder):
 
@@ -42,7 +46,17 @@ You need to select the right programmer type , serial device and speed of course
 
 ## Hardware setup
 
-TODO...
+I've created a little perfboard on which I soldered two 4-pin fan connectors (I spent ages looking for those and finally settled on getting the original Molex ones that cost a fortune) plus 2x four pins to create a sort of patch-bay, mostly because I wasn't sure whether I might also need to feed a fake sense signal back to the mainboard or not...and I needed some place to put the piezo buzzer anyway.
+
+### Parts used
+
+- perfboard
+- molex connectors (for connecting the fan & mainboard, see below for part numbers)
+- dupont connectors for the patch bay (or whatever you have handy, ofc you can skip this completely and just solder everything together directly)
+- piezo buzzer from spare parts bin
+- 100 ohm resistor for the buzzer
+
+
 
 ## Fan controller service (fancontrol-daemon folder):
 
