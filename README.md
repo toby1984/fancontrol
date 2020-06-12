@@ -1,6 +1,6 @@
-# Fan controller for HPE Microserver
+# Fan controller for HPE Microserver Gen10
 
-I bought a HPE Microserver only to realize afterwards that the stock fan is WAY too loud to use this server as a 24/7 NAS in my flat. After some digging it turned out that HPE uses special Delta fans that are controlled by an inverted PWM signal (0% duty-cycle = full-on, 100% = off) and come with a special "revolution detect" (RD) signal that indicates whether the fan is jammed. So no easy way of replacing the fan with a more silent one (not to mention that HPE uses a custom 6-pin connector while regular chassis fans use a 4-pin one...).
+I bought a HPE Microserver Gen10 only to realize afterwards that the stock fan is WAY too loud to use this server as a 24/7 NAS in my flat. After some digging it turned out that HPE uses special Delta fans that are controlled by an inverted PWM signal (0% duty-cycle = full-on, 100% = off) and come with a special "revolution detect" (RD) signal that indicates whether the fan is jammed. So no easy way of replacing the fan with a more silent one (not to mention that HPE uses a custom 6-pin connector while regular chassis fans use a 4-pin one...).
 
 To fix the fan noise (and also have some fun along the way), I've come up with the following solution:
 
