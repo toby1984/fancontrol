@@ -53,12 +53,17 @@ I've created a little perfboard on which I soldered two 4-pin fan connectors (I 
 ### Parts used
 
 - perfboard
-- molex connectors (for connecting the fan & mainboard, see below for part numbers)
+- molex connectors (for connecting the fan & mainboard, see below for part numbers - i ordered some more because it's always nice to have spare parts and otherwise the shipping cost would've exceeded the price of the parts which I hate)
 - dupont connectors for the patch bay (or whatever you have handy, ofc you can skip this completely and just solder everything together directly)
 - piezo buzzer from spare parts bin
 - 100 ohm resistor for the buzzer
 
 ![Molex connectors](https://raw.githubusercontent.com/toby1984/fancontrol/master/pictures/fan_connectors.png)
+
+### Wiring
+
+Here's a crude schematic how I wired the fan ; pay attention to the orientation of the fan headers on my perf board (see photo above).
+
 
 ## Fan controller service (fancontrol-daemon folder):
 
