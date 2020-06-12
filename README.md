@@ -26,12 +26,13 @@ Features
 - final fan speed is determined by picking the highest fan speed of all thermal zones (we only control a single fan, after all)
 
 
-Requirements:
+What you'll need:
 
-- regular 120mm fan with PWM speed control (4-pin connector)
-- Arduino-compatible AVR Atmega328p board (I'm using the watchdog timer, 2 PWM outputs (buzzer+fan), one 16-bit timer and 2 8-bit timers) ... you can probably get away with a smaller AVR but I didn't test this)
+- 120mm PC chassis fan with PWM speed control (4-pin connector). I went straight for the hopefully most silent but definitely most expensive one and got myself a "Silent Wings 3" 120mm high-speed from Be Quiet!. I have used other case/CPU cooler fans from them before and they were always exceptionally quiet. Note that this fan has a slightly lower airflow than the delta one it's going to replace but since I don't live in a desert and won't put any serious load on the server I think this is going to be ok.
+- Arduino-compatible AVR Atmega328p board (I'm using the watchdog timer, 2 PWM outputs (buzzer+fan), one 16-bit timer and 2 8-bit timers) ... you can probably get away with a smaller AVR but I didn't test this and you'll probably have to rewrite some of the assembly)
 - ISP programmer for your Arduino board (you can probably also upload the binary some other way, I just never bothered)
 - Soldering iron & a steady hand (I just cut off the cable from the stock Delta fan and used it to connect to a tiny perfboard)
+- Various small parts, see below
 
 ## Arduino (fancontrol-avr folder):
 
