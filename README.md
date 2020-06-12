@@ -65,6 +65,10 @@ I've created a little perfboard on which I soldered two 4-pin fan connectors (I 
 Here's a crude schematic how I wired the fan ; pay attention to the orientation of the fan headers on my perf board (see photo above).
 
 
+![Wiring](https://raw.githubusercontent.com/toby1984/fancontrol/master/pictures/connections.png)
+
+
+
 ## Fan controller service (fancontrol-daemon folder):
 
 I've written a small C program that will use libatasmart / libsensor to get temperature readings, translate them into a fan speed value and send this to the Arduino via the USB serial port. This whole solution only works nicely because the HPE Microserver has an internal USB port, for regular PCs you would need to somehow hook-up the Arduino to an internal USB header on the mainboard which would be more hassle.
