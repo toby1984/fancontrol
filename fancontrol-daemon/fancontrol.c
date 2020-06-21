@@ -57,6 +57,10 @@ static int is_daemon;
 // we're using to talk to the fan controller
 static int fd;
 
+// time in microseconds (1/1000000) for receiving/transmitting 
+// one byte of data at the configured serial line rate
+static int microsPerByte;
+
 /**
  * Millisecond sleeps.
  * @param mseg sleep time in milliseconds.
@@ -827,6 +831,9 @@ int fc_set_interface_attribs(int fd, fc_config *config)
     speed_t rate = fc_map_baudrate(config->baud_rate);
     cfsetispeed(&tty, rate);
     cfsetospeed(&tty, rate);
+    
+    microsPerByte = 1000000 / (config->baud_rate/9); // 8N1 -> 9 bits per data byte
+    fc_log_debug("fc_set_interface_attribs(): time for transmitting/receiving one byte: %d microseconds",microsPerByte);
 
     if (tcsetattr (fd, TCSAFLUSH, &tty) != 0)
     {
@@ -873,7 +880,7 @@ int fc_ser_write(unsigned char *s) {
         if ( res < 1 ) {
           return 0;    
         }
-        usleep(10000);        
+        usleep(microsPerByte*10);        
     }
     return 1;
 }
@@ -886,23 +893,35 @@ int fc_ser_write(unsigned char *s) {
  * @return number of bytes written to the buffer (including terminating zero byte)
  */
 int fc_ser_readline(char *buf, int bufRemaining) {
-    
-    int respSize;
+        
     int writePtr = 0;
+    char tmp;
+    int retryCount = 10;
+    int result;
     
     fc_log_debug("fc_ser_readline(): Reading response");        
     
-    buf[0] = 0;    
-    while (bufRemaining > 1 && (read(fd, &buf[writePtr], 1)) > 0 ) 
-    {        
-        if ( buf[writePtr] == 0x0a ) {
-          buf[writePtr]=0;          
-          break;
-        }                                
+    buf[0] = 0;
+    while (bufRemaining > 1 && (result = read(fd, &tmp, 1)) >= 0 ) 
+    {       
+        if ( result == 0 ) {
+            retryCount--;
+            if ( retryCount == 0 ) {
+                fc_log_err("fc_ser_readline(): Didn't receive byte after 10 timeouts");
+                break;
+            }            
+            usleep(microsPerByte);
+            continue;
+        }
+        retryCount = 10;
+        buf[writePtr++] = tmp;
         bufRemaining--;                
-        usleep(5000);           
+        if ( tmp == 0x0a ) {    
+          writePtr--;
+          break;
+        }                                               
     }   
-    buf[++writePtr] = 0;    
+    buf[writePtr++] = 0;    
     return writePtr;
 }
 
